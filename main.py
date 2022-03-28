@@ -1,0 +1,30 @@
+from functions import *
+# from selenium.webdriver.chrome.options import Options  # => 引入Chrome的配置
+from selenium.webdriver import ChromeOptions
+from selenium import webdriver
+
+def Chrome_Config(Chorme_path):
+    '''
+    :param Chorme_path: your chorme driver path directory
+    :return:configured driver
+    '''
+    options = ChromeOptions()
+    options.add_experimental_option('excludeSwitches', ['enable-automation'])
+    options.add_experimental_option('useAutomationExtension', False)
+    # options.add_argument("--headless")  # => 为Chrome配置无头模式
+    # options.add_argument("--headless")
+
+
+    driver = webdriver.Chrome(Chorme_path, options=options)
+    return driver
+if __name__ == '__main__':
+
+    Chorme_path = "F:\Code//2022\chromedriver_win32\chromedriver.exe"  # Enter your chrome driver path here
+    driver =Chrome_Config(Chorme_path) #into this function you can choose headless mode
+
+    print('------------------------------------------------------------------------')
+    Keyword_Path = 'keyword.csv'
+    Stop_num=10000 #Collect Stop_num items information
+    kw_start_point=0 #this parameter decides the start keyword of the crawler.its default value is 0
+    Twitter_Crawler(driver,Keyword_Path,Stop_num=Stop_num)
+    driver.close()
