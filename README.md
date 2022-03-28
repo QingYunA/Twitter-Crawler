@@ -9,8 +9,7 @@ use this program you can get:
 - likes num
 - forward num
 ## Usage
-in the python file ```main.py```
-Please set `chrome driver path` and some paramters like max num of collected items and keywords path(csv file).
+in the python file `main.py` Please set chrome driver path and some parameters like max num of collected items and keywords path(CSV file).
 ## To do
 - [ ] Get fun nums from twitter (in this project but I have't to modify it )
 ## Requirements
