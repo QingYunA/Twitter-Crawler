@@ -4,10 +4,7 @@ from selenium.webdriver import ChromeOptions
 from selenium import webdriver
 
 def Chrome_Config(Chorme_path):
-    '''
-    :param Chorme_path: your chorme driver path directory
-    :return:configured driver
-    '''
+    
     options = ChromeOptions()
     options.add_experimental_option('excludeSwitches', ['enable-automation'])
     options.add_experimental_option('useAutomationExtension', False)
@@ -19,8 +16,8 @@ def Chrome_Config(Chorme_path):
     return driver
 if __name__ == '__main__':
 
-    Chorme_path = "F:\Code//2022\chromedriver_win32\chromedriver.exe"  # Enter your chrome driver path here
-    driver =Chrome_Config(Chorme_path) #into this function you can choose headless mode
+    Chrome_path = "F:\Code//2022\chromedriver_win32\chromedriver.exe"  # Enter your chrome driver path here
+    driver =Chrome_Config(Chrome_path) #into this function you can choose headless mode
 
     print('------------------------------------------------------------------------')
     Keyword_Path = 'keyword.csv'
