@@ -3,7 +3,7 @@ from functions import *
 from selenium.webdriver import ChromeOptions
 from selenium import webdriver
 
-def Chrome_Config(Chorme_path):
+def Chrome_Config(Chrome_path):
     
     options = ChromeOptions()
     options.add_experimental_option('excludeSwitches', ['enable-automation'])
@@ -12,7 +12,7 @@ def Chrome_Config(Chorme_path):
     # options.add_argument("--headless")
 
 
-    driver = webdriver.Chrome(Chorme_path, options=options)
+    driver = webdriver.Chrome(Chrome_path, options=options)
     return driver
 if __name__ == '__main__':
 
