@@ -35,9 +35,6 @@ def readDf(path, elementName):
     return df[elementName]
 
 
-# df.head()
-
-
 def searchFunsNum(driver, userName):
     urlPath = 'https://twitter.com/search?q=%s&src=typed_query&f=user' % userName
     driver.get(urlPath)
@@ -55,7 +52,8 @@ def searchFunsNum(driver, userName):
         try:
             html = driver.page_source
             soup = BeautifulSoup(html, 'html.parser')
-            divs = soup.find_all('span', {'class': 'css-901oao css-16my406 r-18jsvk2 r-poiln3 r-b88u0q r-bcqeeo r-qvutc0'})
+            divs = soup.find_all('span',
+                                 {'class': 'css-901oao css-16my406 r-18jsvk2 r-poiln3 r-b88u0q r-bcqeeo r-qvutc0'})
             noResTimes += 1
             if noResTimes >= 20:
                 return 'Cant find this user!'
@@ -83,6 +81,7 @@ def saveToCsv(savePath, oriDfPath, insertData, columnName):
     df.insert(loc=len(df.columns), column=columnName, value=insertData)
     df.to_csv(savePath, encoding='utf_8_sig')
 
+
 def tranFunNum(csvPath, savePath):
     df = pd.read_csv(csvPath, encoding="UTF-8")
     FunsNum = df['Funs']
@@ -105,6 +104,7 @@ def tranFunNum(csvPath, savePath):
     df.insert(loc=len(df.columns), column='Funs', value=procFun)
     df.to_csv(savePath, encoding='utf_8_sig')
 
+
 def transDir(basePath, savebasePath):
     fileNames = os.listdir(basePath)
     for filePath in fileNames:
@@ -119,15 +119,11 @@ def transDir(basePath, savebasePath):
 
 if __name__ == '__main__':
 
-    # basePath = '0313-testAddFuns/afterProcess/'
-    # savebasePath='0313-testAddFuns/afterProcess/'
-    # transDir(basePath,savebasePath=savebasePath)
-
     ###根据目录爬取粉丝数量
     driverPath = "F:\Code//2022\chromedriver_win32\chromedriver.exe"
     driver = creatBroserDriver(driverPath)
 
-    basePath = '0313data/'
+    basePath = 'data/'
     savaBasePath = '0313data/addFuns/'
 
     if (not os.path.exists(savaBasePath)):
@@ -138,17 +134,15 @@ if __name__ == '__main__':
         csvPath = os.path.join(basePath, filePath)
         if (not os.path.isdir(csvPath)):
             print('processing file %s' % filePath)
-            # savePath='F:\Code/2022/CYQ-spider/0313-testAddFuns/afterProcess/Done—%s'%filePath
             savePath = savaBasePath + 'Done-%s' % filePath
             funsArray = []
-
 
             userNames = readDf(csvPath, elementName='User_name')
             for index, userName in enumerate(userNames):
                 funsNum = searchFunsNum(driver, userName=userName)
                 funsArray.append(funsNum)
-                if len(funsArray)%500==0:
-                    print('Process %s items'%len(funsArray))
+                if len(funsArray) % 500 == 0:
+                    print('Process %s items' % len(funsArray))
 
             saveToCsv(savePath=savePath, oriDfPath=csvPath, insertData=funsArray, columnName='Funs')
             print('Process have done! saved in %s' % savePath)
