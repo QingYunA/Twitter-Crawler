@@ -19,31 +19,33 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver import ChromeOptions
 
 
-def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0,save_path=None):
+def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0, save_path=None, start_date=None, end_date=None):
     '''
     :param driver: Chrome Driver
     :param Keyword_Path:the file directory of your keywords which should be csv
     :param Stop_num: the number of the items need to be collect
     :param kw_start_point:start of your keyword
     :param save_path: the file directory of your data which should be csv
+    :param start_date: the start date of search
+    :param end_date: the end date of search
     :return:
     '''
     df = pd.read_csv(Keyword_Path, encoding='GB18030')
     page_index = 1
+    search_end= False
     for index, kw in enumerate(df['关键词']):
         if (index >= kw_start_point):
             Data_List = []
             History_data = []
             url = 'https://twitter.com/search?q=%s&src=typed_query&f=live' % kw
             driver.get(url)
-            driver.implicitly_wait(10);
+            driver.implicitly_wait(10)
             try:
-
                 old_scroll_height = 0  # 表明页面在最上端
                 js1 = 'return document.body.scrollHeight'  # 获取页面高度的javascript语句
                 js2 = 'window.scrollTo(0, document.body.scrollHeight)'  # 将页面下拉的Javascript语句
-                while (driver.execute_script(js1) > old_scroll_height and len(
-                        Data_List) < Stop_num):  # 将当前页面高度与上一次的页面高度进行对比
+                while ((driver.execute_script(js1) > old_scroll_height and len(
+                        Data_List) < Stop_num) and search_end == False):  # 将当前页面高度与上一次的页面高度进行对比
                     old_scroll_height = driver.execute_script(js1)  # 获取到当前页面高度
                     driver.execute_script(js2)  # 操控浏览器进行下拉
                     time.sleep(3)  # 空出加载的时间
@@ -76,12 +78,11 @@ def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0,save_path=N
                             date = date['datetime']
                             date = date.split('T')[0]
                             # 校验推文发布时间是否在范围内
-                            dateSplit = date.split('-')
-                            dateMonth = int(dateSplit[1])
-                            dateDay = int(dateSplit[2])
-                            if (dateSplit[0] == '2021' and dateMonth < 3):
-                                searchEnd = 1
-
+                            if (date > start_date):
+                                continue
+                            if (date < end_date):
+                                search_end = True
+                                print('时间超出%s，搜索结束!' % end_date)
                             # 写入转发 评论 点赞数量
                             temp = div.find_all('span', {
                                 'class': 'css-901oao css-16my406 r-poiln3 r-n6v787 r-1cwl3u0 r-1k6nrdp r-1e081e0 r-qvutc0'})
@@ -111,17 +112,16 @@ def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0,save_path=N
                             continue
             except Exception as e:
                 print(e)
-            SaveToCSV(Data_List, index, df, page_index,save_path)
+            SaveToCSV(Data_List, index, df, page_index, save_path)
 
 
-def SaveToCSV(Data_List, index, keyword_df, page_index,save_path):
+def SaveToCSV(Data_List, index, keyword_df, page_index, save_path):
     df_Sheet = pd.DataFrame(Data_List, columns=[
         'Name', 'User_name', 'Date', 'Content', 'Comments', 'Forward', 'Like', 'Language', 'FunsNum'])
     TIMEFORMAT = '%y%m%d-%H%M%S'
     now = datetime.datetime.now().strftime(TIMEFORMAT)
     kw = keyword_df['关键词'][index]
     kw = kw.split(' ')[0]
-    # csv_path = 'F:/Code/2022/CYQ-spider/data/kw=%s-%s.csv' % (kw, now)
     csv_path = save_path + '/kw=%s-%s.csv' % (kw, now)
     df_Sheet.to_csv(csv_path, encoding='utf_8_sig')
     print('第 {} 个URL信息已获取完毕。'.format(page_index))

@@ -21,12 +21,15 @@ if __name__ == '__main__':
     driver =Chrome_Config(Chrome_path) #into this function you can choose headless mode
 
     print('------------------------------------------------------------------------')
+    #parameters
     Keyword_Path = 'keyword.csv'
-    Stop_num=10000 #Collect Stop_num items information
+    Stop_num=10000 #this is the number of the items you want to crawl
     kw_start_point=0 #this parameter decides the start keyword of the crawler.its default value is 0
-    save_path = 'data'
+    save_path = 'data'#this is the path where you want to save the crawled data
+    start_date= '2021-01-01' #this parameter decides the start date of the crawler.its default value is 2021-01-01
+    end_date= '2020-01-01' #this parameter decides the end date of the crawler.its default value is 2020-01-01
     if not os.path.exists(save_path):
         os.mkdir(save_path)
-    Twitter_Crawler(driver,Keyword_Path,Stop_num=Stop_num)
+    Twitter_Crawler(driver,Keyword_Path,Stop_num,kw_start_point,save_path,start_date,end_date)
     print('------------------------------------------------------------------------')
     driver.close()
