@@ -10,7 +10,7 @@ This project is a crawler program. which can automatically collect information f
 ## Usage
 in the python file `main.py` Please set chrome driver path and some parameters like max num of collected items and keywords path(CSV file).
 ## To do
-- [ ] Get fun nums from twitter (in this project but I have't to modify it )
+- [ ] Get follower count from Twitter (in this project, but I haven't modified it yet)
 ## Requirements
 - python>=3.6
 - your chorme version need to match driver version
