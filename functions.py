@@ -19,12 +19,13 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver import ChromeOptions
 
 
-def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0):
+def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0,save_path=None):
     '''
     :param driver: Chrome Driver
     :param Keyword_Path:the file directory of your keywords which should be csv
     :param Stop_num: the number of the items need to be collect
-    :param kw_start_point:start of your keywords
+    :param kw_start_point:start of your keyword
+    :param save_path: the file directory of your data which should be csv
     :return:
     '''
     df = pd.read_csv(Keyword_Path, encoding='GB18030')
@@ -110,18 +111,18 @@ def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0):
                             continue
             except Exception as e:
                 print(e)
-                # i = i + 1
-            SaveToCSV(Data_List, index, df, page_index)
+            SaveToCSV(Data_List, index, df, page_index,save_path)
 
 
-def SaveToCSV(Data_List, index, keyword_df, page_index):
+def SaveToCSV(Data_List, index, keyword_df, page_index,save_path):
     df_Sheet = pd.DataFrame(Data_List, columns=[
         'Name', 'User_name', 'Date', 'Content', 'Comments', 'Forward', 'Like', 'Language', 'FunsNum'])
     TIMEFORMAT = '%y%m%d-%H%M%S'
     now = datetime.datetime.now().strftime(TIMEFORMAT)
     kw = keyword_df['关键词'][index]
     kw = kw.split(' ')[0]
-    csv_path = 'F:/Code/2022/CYQ-spider/data/kw=%s-%s.csv' % (kw, now)
+    # csv_path = 'F:/Code/2022/CYQ-spider/data/kw=%s-%s.csv' % (kw, now)
+    csv_path = save_path + '/kw=%s-%s.csv' % (kw, now)
     df_Sheet.to_csv(csv_path, encoding='utf_8_sig')
     print('第 {} 个URL信息已获取完毕。'.format(page_index))
     try:

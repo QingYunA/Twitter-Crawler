@@ -2,6 +2,7 @@ from functions import *
 # from selenium.webdriver.chrome.options import Options  # => 引入Chrome的配置
 from selenium.webdriver import ChromeOptions
 from selenium import webdriver
+import os
 
 def Chrome_Config(Chrome_path):
     
@@ -23,5 +24,9 @@ if __name__ == '__main__':
     Keyword_Path = 'keyword.csv'
     Stop_num=10000 #Collect Stop_num items information
     kw_start_point=0 #this parameter decides the start keyword of the crawler.its default value is 0
+    save_path = 'data'
+    if not os.path.exists(save_path):
+        os.mkdir(save_path)
     Twitter_Crawler(driver,Keyword_Path,Stop_num=Stop_num)
+    print('------------------------------------------------------------------------')
     driver.close()
