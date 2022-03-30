@@ -14,7 +14,9 @@ This project is a crawler program. which can automatically collect information f
 - date_time: the date you want to search
 - limit_language: the language you want to search.it's default value is 'all'
 ## Usage
-in the python file `main.py` Please set chrome driver path and parameters correctly.
+- in `main.py` Please set chrome driver path and parameters correctly.
+- if you want to get followers of a user, please use file `GetFunsNum.py`. you just need to enter the chrome driver path and the csv file path which is get from `main.py`.
+- in fact, the GetFunsNum.py can use a csv file which just contains username.
 ## To do
 - [x] Get follower count from Twitter (here I use a noob method to get it)
 ## Requirements
