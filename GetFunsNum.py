@@ -118,17 +118,14 @@ def transDir(basePath, savebasePath):
 
 
 if __name__ == '__main__':
-
-    ###根据目录爬取粉丝数量
-    driverPath = "F:\Code//2022\chromedriver_win32\chromedriver.exe"
-    driver = creatBroserDriver(driverPath)
-
-    basePath = 'data/'
-    savaBasePath = '0313data/addFuns/'
-
+    #-----------------------------------------------------
+    driverPath = "F:\Code//2022\chromedriver_win32\chromedriver.exe" #Enter your chromedriver path here
+    basePath = 'data/' # Enter the path of the csv file you want to process
+    savaBasePath = '0313data/addFuns/' # Enter the path of the csv file you want to save
+    #-----------------------------------------------------
     if (not os.path.exists(savaBasePath)):
         os.mkdir(savaBasePath)
-
+    driver = creatBroserDriver(driverPath)
     fileNames = os.listdir(basePath)
     for filePath in fileNames:
         csvPath = os.path.join(basePath, filePath)

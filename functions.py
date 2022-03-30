@@ -21,6 +21,7 @@ from selenium.webdriver import ChromeOptions
 
 def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0, save_path=None, start_date=None, end_date=None):
     '''
+    core function
     :param driver: Chrome Driver
     :param Keyword_Path:the file directory of your keywords which should be csv
     :param Stop_num: the number of the items need to be collect
@@ -116,6 +117,9 @@ def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0, save_path=
 
 
 def SaveToCSV(Data_List, index, keyword_df, page_index, save_path):
+    '''
+    将数据保存到CSV文件中
+    '''
     df_Sheet = pd.DataFrame(Data_List, columns=[
         'Name', 'User_name', 'Date', 'Content', 'Comments', 'Forward', 'Like', 'Language', 'FunsNum'])
     TIMEFORMAT = '%y%m%d-%H%M%S'
