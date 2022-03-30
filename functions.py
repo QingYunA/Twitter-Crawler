@@ -19,7 +19,8 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver import ChromeOptions
 
 
-def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0, save_path=None, start_date=None, end_date=None):
+def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0, save_path=None, start_date=None, end_date=None,
+                    limit_language='all'):
     '''
     core function
     :param driver: Chrome Driver
@@ -33,7 +34,7 @@ def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0, save_path=
     '''
     df = pd.read_csv(Keyword_Path, encoding='GB18030')
     page_index = 1
-    search_end= False
+    search_end = False
     for index, kw in enumerate(df['关键词']):
         if (index >= kw_start_point):
             Data_List = []
@@ -97,7 +98,7 @@ def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0, save_path=
                                 language = 'unknown'
 
                             # 写入dataSet
-                            if (language == 'zh' and (str_content not in History_data)):
+                            if ((language == limit_language or limit_language=='all') and (str_content not in History_data)):
                                 data_list.append(name)  # 名字
                                 data_list.append(user_name)  # 用户名
                                 data_list.append(date)
