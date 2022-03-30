@@ -1,5 +1,7 @@
 # Twitter-Crawler
-if you don't want read english readme, you can go to file zh-README.md
+
+### Read Chinese README.md here! [zh-README](https://github.com/QingYunA/Twitter-Crawler/blob/master/zh-README.md)
+## introduction
 This project is a crawler program. which can automatically collect information from Twitter by the keywords you set. use this program you can get:
 - username
 - name
