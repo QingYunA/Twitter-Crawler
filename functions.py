@@ -35,7 +35,7 @@ def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0, save_path=
     df = pd.read_csv(Keyword_Path, encoding='GB18030')
     page_index = 1
     search_end = False
-    for index, kw in enumerate(df['关键词']):
+    for index, kw in enumerate(df['keywords']):
         if (index >= kw_start_point):
             Data_List = []
             History_data = []
@@ -121,7 +121,7 @@ def SaveToCSV(Data_List, index, keyword_df, page_index, save_path):
         'Name', 'User_name', 'Date', 'Content', 'Comments', 'Forward', 'Like', 'Language'])
     TIMEFORMAT = '%y%m%d-%H%M%S'
     now = datetime.datetime.now().strftime(TIMEFORMAT)
-    kw = keyword_df['关键词'][index]
+    kw = keyword_df['keywords'][index]
     kw = kw.split(' ')[0]
     csv_path = save_path + '/kw=%s-%s.csv' % (kw, now)
     df_Sheet.to_csv(csv_path, encoding='utf_8_sig')
