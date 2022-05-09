@@ -9,7 +9,7 @@ This project is a crawler program. which can automatically collect information f
 - language
 - comments num
 - likes num
-- forward num
+- forward n
 ## parameters 
 - keywords_path: the keywords you want to search
 - stop_num: the number of tweets you want to search

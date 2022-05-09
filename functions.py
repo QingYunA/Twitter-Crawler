@@ -54,7 +54,6 @@ def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0, save_path=
                     html = driver.page_source
                     soup = BeautifulSoup(html, 'html.parser')
                     divs = soup.find_all('div', {'class': 'css-1dbjc4n r-1iusvr4 r-16y2uox r-1777fci r-kzbkwu'})
-
                     for divIndex, div in enumerate(divs):
                         data_list = []
 
@@ -71,7 +70,6 @@ def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0, save_path=
                             # 获取名字
                             name = div.find(
                                 'span', {'class': 'css-901oao css-16my406 r-poiln3 r-bcqeeo r-qvutc0'}).get_text()
-
                             # 获取用户名
                             user_name = div.find(
                                 'div', {'class': 'css-1dbjc4n r-18u37iz r-1wbh5a2 r-13hce6t'}).get_text()
@@ -80,11 +78,11 @@ def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0, save_path=
                             date = date['datetime']
                             date = date.split('T')[0]
                             # 校验推文发布时间是否在范围内
-                            if (date > start_date):
-                                continue
-                            if (date < end_date):
-                                search_end = True
-                                print('时间超出%s，搜索结束!' % end_date)
+                            # if (date > start_date):
+                            #     continue
+                            # if (date < end_date):
+                            #     search_end = True
+                            #     print('时间超出%s，搜索结束!' % end_date)
                             # 写入转发 评论 点赞数量
                             temp = div.find_all('span', {
                                 'class': 'css-901oao css-16my406 r-poiln3 r-n6v787 r-1cwl3u0 r-1k6nrdp r-1e081e0 r-qvutc0'})
@@ -93,10 +91,8 @@ def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0, save_path=
                                 interactionDatas.append(span.get_text())
                             try:
                                 language = content.get('lang')
-
                             except:
                                 language = 'unknown'
-
                             # 写入dataSet
                             if ((language == limit_language or limit_language=='all') and (str_content not in History_data)):
                                 data_list.append(name)  # 名字
@@ -122,7 +118,7 @@ def SaveToCSV(Data_List, index, keyword_df, page_index, save_path):
     将数据保存到CSV文件中
     '''
     df_Sheet = pd.DataFrame(Data_List, columns=[
-        'Name', 'User_name', 'Date', 'Content', 'Comments', 'Forward', 'Like', 'Language', 'FunsNum'])
+        'Name', 'User_name', 'Date', 'Content', 'Comments', 'Forward', 'Like', 'Language'])
     TIMEFORMAT = '%y%m%d-%H%M%S'
     now = datetime.datetime.now().strftime(TIMEFORMAT)
     kw = keyword_df['关键词'][index]
