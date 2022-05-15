@@ -26,6 +26,6 @@ if __name__ == '__main__':
     ui.setupUi(MainWindow)
     ui.pushButton.clicked.connect(lambda :ui.Ui_Twitter_Crawler())
     MainWindow.show()
-    print('------------------------------------------------------------------------')
+
     sys.exit(app.exec_())
     # Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point, save_path, start_date, end_date, limit_language)

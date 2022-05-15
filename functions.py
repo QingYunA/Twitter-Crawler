@@ -1,8 +1,11 @@
 # import BeautifulSoup
+import os
 from math import fabs
 import time
 import datetime
 from xml.etree.ElementTree import Comment
+
+import requests
 from hyperlink import URL
 from numpy import common_type
 import pandas as pd
@@ -20,7 +23,7 @@ from selenium.webdriver import ChromeOptions
 
 
 def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0, save_path=None, start_date=None, end_date=None,
-                    limit_language='all'):
+                    limit_language='all', photo_path='./photo/'):
     '''
     core function
     :param driver: Chrome Driver
@@ -39,7 +42,7 @@ def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0, save_path=
         if (index >= kw_start_point):
             Data_List = []
             History_data = []
-            url = 'https://twitter.com/search?q=%s&src=typed_query&f=live' % kw
+            url = 'https://twitter.com/search?q=%s&src=typed_query' % kw
             driver.get(url)
             driver.implicitly_wait(10)
             try:
@@ -93,8 +96,23 @@ def Twitter_Crawler(driver, Keyword_Path, Stop_num, kw_start_point=0, save_path=
                                 language = content.get('lang')
                             except:
                                 language = 'unknown'
+                            # download img
+                            kw_photo_path = photo_path + kw + '/'
+                            # print(kw_photo_path)
+                            if (not os.path.exists(kw_photo_path)):
+                                os.mkdir(kw_photo_path)
+                            try:
+                                img_url = div.find('img', {'alt': "图像"}).get('src')
+                                r = requests.get(img_url)
+                                path = os.path.join(kw_photo_path, user_name + '.jpg')
+                                print(path)
+                                with open(path, 'wb') as f:
+                                    f.write(r.content)
+                            except:
+                                wushifasheng = 0
                             # 写入dataSet
-                            if ((language == limit_language or limit_language=='all') and (str_content not in History_data)):
+                            if ((language == limit_language or limit_language == 'all') and (
+                                    str_content not in History_data)):
                                 data_list.append(name)  # 名字
                                 data_list.append(user_name)  # 用户名
                                 data_list.append(date)
