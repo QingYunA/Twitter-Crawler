@@ -13,7 +13,7 @@ English README [here](https://github.com/QingYunA/Twitter-Crawler/blob/master/EN
 - 粉丝数
 - ···
 ## 更新日志
-- [ x ] 简易的GUI版本的爬虫，有需要的朋友可以测试~
+- [x] 简易的GUI版本的爬虫，有需要的朋友可以测试~
 ## 参数
 
 — keywords_path:需要搜索的关键字
