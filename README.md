@@ -1,4 +1,6 @@
 # 推特爬虫
+English README [here](https://github.com/QingYunA/Twitter-Crawler/blob/master/EN-README.md)
+
 这个项目是一个爬虫程序。它可以通过你设置的关键字自动从Twitter收集信息。使用这个程序你可以得到:
 - 用户名
 - 昵称
