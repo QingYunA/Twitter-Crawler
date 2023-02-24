@@ -24,8 +24,8 @@
 ## 使用方法
 在python文件`main.py`中设置正确的chromedriver路径和相关参数，然后运行程序。
 ## 环境要求
+- **与chrome版本匹配的chromedriver**
 - python>=3.6
-- 注意chromedriver需要与chrome版本匹配
 ## 联系方式
 - 邮箱: serein7z@163.com
 有任何问题或建议，欢迎联系。
